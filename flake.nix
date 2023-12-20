@@ -13,7 +13,11 @@
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
-          packages = with pkgs; [ deno zellij ];
+          packages = with pkgs; [
+            deno
+            zellij
+            k6
+          ];
         };
       });
     };
