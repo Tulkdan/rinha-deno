@@ -1,7 +1,12 @@
 import { Router } from 'oak/mod.ts'
 import { getQuery } from 'oak/helpers.ts'
 import { z } from 'zod/mod.ts'
-import { createPeople, getPerson } from '../controllers/people.ts'
+import {
+  countPeopleController,
+  createPeopleController,
+  getPeopleController,
+  getPersonController,
+} from '../controllers/people.ts'
 
 const router = new Router()
 
@@ -23,16 +28,14 @@ router.post('/pessoas', async (ctx) => {
     return
   }
 
-  const id = await createPeople(data)
+  const id = await createPeopleController(data)
 
   ctx.response.status = 201
   ctx.response.headers.append('Location', `/pessoas/${id}`)
 })
 
 router.get('/pessoas/:id', async (ctx) => {
-  console.log(ctx.params.id)
-
-  const person = await getPerson(ctx.params.id)
+  const person = await getPersonController(ctx.params.id)
 
   if (!person) {
     ctx.throw(404, 'User not found')
@@ -43,11 +46,25 @@ router.get('/pessoas/:id', async (ctx) => {
   ctx.response.body = person
 })
 
-router.get('/pessoas', (ctx) => {
-  console.log(getQuery(ctx))
+router.get('/pessoas', async (ctx) => {
+  const queryParams = getQuery(ctx)
+
+  if (!queryParams.t) {
+    ctx.throw(400, 'Query param "t" is needed')
+    return
+  }
+
+  const result = await getPeopleController(queryParams.t)
+
+  ctx.response.status = 200
+  ctx.response.body = result
 })
 
-router.get('/contagem-pessoas', (_ctx) => {
+router.get('/contagem-pessoas', async (ctx) => {
+  const count = await countPeopleController()
+
+  ctx.response.status = 200
+  ctx.response.body = count ?? 0
 })
 
 export default router
