@@ -3,8 +3,8 @@
     "oak/": "https://deno.land/x/oak/"
   },
   "tasks": {
-    "start": "deno run --allow-net --allow-env src/main.ts",
-    "watch": "deno run --watch --allow-net --allow-env src/main.ts"
+    "start": "deno run --allow-net --allow-env main.ts",
+    "dev": "deno run --watch --allow-net --allow-env main.ts"
   },
   "fmt": {
     "semiColons": false,
