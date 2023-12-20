@@ -1,8 +1,5 @@
 FROM denoland/deno:alpine
 
-# The port that your application listens to.
-EXPOSE 1993
-
 WORKDIR /app
 
 # Prefer not to run as root.
@@ -15,4 +12,4 @@ COPY src/ ./src
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache main.ts
 
-CMD ["run", "--allow-net", "--allow-env", "main.ts"]
+CMD ["task", "start"]
