@@ -1,6 +1,13 @@
 {
+  "compilerOptions": {
+    "strict": true
+  },
   "imports": {
-    "oak/": "https://deno.land/x/oak/"
+    "oak/": "https://deno.land/x/oak/",
+    "zod/": "https://deno.land/x/zod/",
+    "kysely": "npm:kysely@^0.25.0",
+    "pg": "npm:pg",
+    "pg-pool": "npm:pg-pool"
   },
   "tasks": {
     "start": "deno run --allow-net --allow-env main.ts",
